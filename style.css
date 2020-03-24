@@ -1,0 +1,13 @@
+html {
+    background-color: #191919;
+}
+
+
+table {
+    border-collapse: collapse;
+    border: 1;
+}
+
+td {
+    border: 0.2px solid black;
+}
