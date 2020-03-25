@@ -29,28 +29,20 @@ function setRandomCells(cells = 400) {
 }
 
 function numberOfNeighbors(line, column) {
-    const neighbors = [
-        getCell(line, column + 1),
-        getCell(line, column - 1),
-        getCell(line + 1, column),
-        getCell(line - 1, column),
-        getCell(line + 1, column + 1),
-        getCell(line - 1, column + 1),
-        getCell(line + 1, column - 1),
-        getCell(line - 1, column - 1)
-    ];
+    const neighbors = getCells(
+        [
+            [line, column + 1],
+            [line, column - 1],
+            [line + 1, column],
+            [line - 1, column],
+            [line + 1, column + 1],
+            [line - 1, column + 1],
+            [line + 1, column - 1],
+            [line - 1, column - 1]
+        ]
+    );
 
-    let number = 0;
-
-    for (neighbor of neighbors) {
-        if (neighbor != null) {
-            if (neighbor.dataset.iscell === "1") {
-                number += 1;
-            }
-        }
-    }
-
-    return number;
+    return neighbors.length;
 }
 
 function addCell(line, column) {
@@ -60,15 +52,18 @@ function addCell(line, column) {
     cell.setAttribute("data-iscell", "1")
 }
 
-function getCell(line, column) {
+function getCells(particulars) {
     const tr = document.getElementsByTagName("tr");
+    neighbors = []
 
-    try {
-        const cell = tr[line].childNodes[column]
-        return cell
-    } catch (why) {
-        return null;
+    for (particular of particulars) {
+        try {
+            const elem = tr[particular[0]].childNodes[particular[1]];
+            elem.dataset.iscell === "1" ? neighbors.push(elem) : null
+        } catch (why) { }
     }
+
+    return neighbors
 }
 
 function deleteCell(line, column) {
