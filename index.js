@@ -1,3 +1,5 @@
+var tr = document.getElementsByTagName("tr");
+
 function initBoard() {
     const tbody = document.getElementsByTagName("tbody")[0];
 
@@ -42,50 +44,55 @@ function numberOfNeighbors(line, column) {
         ]
     );
 
-    return neighbors.length;
+    let neighborsCells = 0;
+
+    for (neighbor of neighbors) {
+        if (neighbor !== undefined && neighbor !== null)
+            if (neighbor.dataset.iscell === "1")
+                neighborsCells += 1
+    }
+
+    return neighborsCells
 }
 
 function addCell(line, column) {
-    const tr = document.getElementsByTagName("tr");
     const cell = tr[line].childNodes[column];
     cell.setAttribute("style", "height:10;width:10")
     cell.setAttribute("data-iscell", "1")
 }
 
 function getCells(particulars) {
-    const tr = document.getElementsByTagName("tr");
-    neighbors = []
+    cells = []
 
     for (particular of particulars) {
         try {
-            const elem = tr[particular[0]].childNodes[particular[1]];
-            elem.dataset.iscell === "1" ? neighbors.push(elem) : null
-        } catch (why) { }
+            cells.push(tr[particular[0]].childNodes[particular[1]])
+        } catch (why) {
+            cells.push(null)
+        }
     }
 
-    return neighbors
+    return cells
 }
 
 function deleteCell(line, column) {
-    const tr = document.getElementsByTagName("tr");
     const cell = tr[line].childNodes[column];
     cell.setAttribute("style", "height:10;width:10;background-color:#dee3e2")
 }
 
 function run() {
-    const trs = document.getElementsByTagName("tr");
+    tr = document.getElementsByTagName("tr");
 
-    for (let trIndex = 0; trIndex < trs.length; trIndex++) {
-        const tds = trs[trIndex].childNodes;
+    for (let trIndex = 0; trIndex < tr.length; trIndex++) {
+        const tds = tr[trIndex].childNodes;
 
         for (let tdIndex = 0; tdIndex < tds.length; tdIndex++) {
-            if (numberOfNeighbors(trIndex, tdIndex) > 3) {
+            const numberOfNeighbors_ = numberOfNeighbors(trIndex, tdIndex)
+            if (numberOfNeighbors_ > 3)
                 deleteCell(trIndex, tdIndex);
-            }
 
-            if (numberOfNeighbors(trIndex, tdIndex) === 3) {
+            if (numberOfNeighbors_ === 3)
                 addCell(trIndex, tdIndex);
-            }
         }
     }
 }
@@ -94,9 +101,10 @@ function main() {
     numberOfInitialCells = Math.round((window.innerHeight + window.innerWidth) * 400 / (1920 + 777));
     initBoard()
     setRandomCells(numberOfInitialCells)
+
     for (let loop = 0; loop < 900; loop++) {
         setTimeout(() => {
             run();
-        }, 1000);
+        }, 200);
     }
 }
