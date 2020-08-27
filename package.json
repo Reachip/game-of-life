@@ -1,0 +1,12 @@
+{
+  "name": "game-of-life",
+  "version": "1.0.0",
+  "description": "A simple GOL",
+  "main": "index.js",
+  "repository": "git@github.com:Reachip/game-of-life.git",
+  "author": "Rached Mejri <r.mejri74100@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "jasmine": "^3.6.1"
+  }
+}
