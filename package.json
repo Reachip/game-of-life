@@ -6,7 +6,12 @@
   "repository": "git@github.com:Reachip/game-of-life.git",
   "author": "Rached Mejri <r.mejri74100@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "test": "./node_modules/.bin/jest"
+  },
   "devDependencies": {
-    "jasmine": "^3.6.1"
+    "jasmine": "^3.6.1",
+    "jest": "^26.4.2",
+    "jsdom": "^16.4.0"
   }
 }
